@@ -1,21 +1,21 @@
 import bcrypt from "bcrypt";
 import getPool from "../../database/getPool.js";
 import {
-  userAlreadyRegistratedError,
-  emailAlreadyRegistratedError,
+  userAlReadyRegistratedError,
+  emailAlReadyRegistratedError,
 } from "../../service/errorService.js";
 
-const insertUserModel = async (name, email, password, bio, photo) => {
+const insertUserModel = async (username, email, password, bio) => {
   const pool = await getPool();
 
   let [user] = await pool.query(
     `
-        SELECT id FROM users WHERE name = ?
+        SELECT id FROM users WHERE username = ?
     `,
-    [name]
+    [username]
   );
   if (user.lenght) {
-    userAlreadyRegistratedError();
+    userAlReadyRegistratedError();
   }
   [user] = await pool.query(
     `
@@ -24,7 +24,7 @@ const insertUserModel = async (name, email, password, bio, photo) => {
     [email]
   );
   if (user.lenght) {
-    emailAlreadyRegistratedError();
+    emailAlReadyRegistratedError();
   }
 
   [user] = await pool.query(
@@ -34,19 +34,13 @@ const insertUserModel = async (name, email, password, bio, photo) => {
     [bio]
   );
 
-  [user] = await pool.query(
-    `
-      SELECT id FROM users WHERE photo = ?
-    `,
-    [photo]
-  );
   const hashedPassword = await bcrypt.hash(password, 10);
   await pool.query(
     `
-        INSERT INTO users (name, email, password, bio, photo)
-        VALUES (?,?,?,?,?)
+        INSERT INTO users (username, email, password, bio)
+        VALUES (?,?,?,?)
     `,
-    [name, email, hashedPassword, bio, photo]
+    [username, email, hashedPassword, bio]
   );
 };
 

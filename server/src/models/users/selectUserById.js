@@ -1,16 +1,16 @@
 import getPool from "../../database/getPool.js";
 
-const selectUserByEmail = async (email) => {
+const selectUserById = async (id) => {
   const pool = await getPool();
   const [user] = await pool.query(
     `
-            SELECT id, password
+            SELECT username, photo, bio, email
             FROM users
-            WHERE email = ?
+            WHERE id = ?
         `,
-    [email]
+    [id]
   );
   return user[0];
 };
 
-export default selectUserByEmail;
+export default selectUserById;

@@ -1,17 +1,19 @@
 {
   "name": "cousera",
   "version": "1.0.0",
-  "description": "portal necesidades",
-  "main": "app.js",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "start": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\" ",
+    "initDb": "cd server && npm run initDB",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  },
-  "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server/app.js",
-    "client": "npm start --prefix ./client"
   }
 }

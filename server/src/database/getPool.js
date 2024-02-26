@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import mysql from "mysql2/promise";
-import { getPoolError } from "../service/errorService.js";
 
 dotenv.config();
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
@@ -21,7 +20,7 @@ const getPool = async () => {
     }
     return pool;
   } catch (error) {
-    poolError();
+    console.log(error);
   }
 };
 

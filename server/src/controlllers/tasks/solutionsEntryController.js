@@ -1,5 +1,5 @@
 import selectTaskByIdModel from "../../models/tasks/selectTaskByIdModel.js";
-import { resolveOwnTaskError } from "../../service/errorService.js";
+import { canNotResolveTaskError } from "../../service/errorService.js";
 import insertSolutionModel from "../../models/tasks/insertSolutionModel.js";
 import { fileService } from "../../service/fileService.js";
 
@@ -10,7 +10,7 @@ const solutionsEntryController = async (req, res, next) => {
 
     const task = await selectTaskByIdModel(taskId);
 
-    if (task.user_id === req.user.id) resolveOwnTaskError();
+    if (task.user_id === req.user.id) canNotResolveTaskError();
 
     let photos = [];
 
@@ -18,12 +18,15 @@ const solutionsEntryController = async (req, res, next) => {
       for (let file of Object.values(req.files).slice(0, 3)) {
         let photoName = await fileService(file);
 
-        const solution = await insertSolutionModel(description, photoName, taskId, req.user.id);
-
-        solution.createdAt = solution.createdAt; // Devolver el timestamp de creación desde la base de datos
+        const solutions = await insertSolutionModel(
+          description,
+          photoName,
+          taskId,
+          req.user.id
+        );
 
         photos.push({
-          id: solution,
+          id: solutions,
           name: photoName,
         });
       }
@@ -37,4 +40,4 @@ const solutionsEntryController = async (req, res, next) => {
   }
 };
 
-export default solutionsEntryController;
+export default solutionsEntryController;;

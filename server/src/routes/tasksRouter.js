@@ -6,35 +6,43 @@ import {
   authUserController,
   taskExistController,
 } from "../middlewares/index.js";
-
 import {
   newTaskController,
   listTasksController,
-  solutionEntryController,
+  solutionsEntryController,
   getTaskController,
-  commentTaskController,
+  commentsTaskController,
   editStatusTaskController,
-} from "../controllers/tasks/index.js";
+} from "../controlllers/tasks/index.js";
 
-import searchTasksController from "../controllers/tasks/searchTasksController.js";
+import validation from "../middlewares/joiValidation.js";
+import {
+  newTaskSchema,
+  newSolutionSchema,
+  newCommentSchema,
+} from "../schemas/task/index.js";
 
-router.post("/tasks", authUserController, newTaskController);
+router.post(
+  "/tasks",
+  validation(newTaskSchema),
+  authUserController,
+  newTaskController
+);
 router.get("/tasks", listTasksController);
 router.get("/tasks/:taskId", taskExistController, getTaskController);
 router.post(
   "/tasks/:taskId/solutions",
+  validation(newSolutionSchema),
   authUserController,
   taskExistController,
-  solutionEntryController
+  solutionsEntryController
 );
 router.post(
   "/tasks/:taskId/comments",
+  validation(newCommentSchema),
   authUserController,
   taskExistController,
-  commentTaskController
+  commentsTaskController
 );
 router.post("/tasks/status", authUserController, editStatusTaskController);
-
-router.get("/tasks/search", searchTasksController); // Búsqueda
-
 export default router;

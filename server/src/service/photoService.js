@@ -12,11 +12,11 @@ const { UPLOADS_DIR } = process.env;
 
 export const savePhotoService = async (photo, width) => {
   try {
-    const imgDir = path.join(process.cwd(), `./src/${UPLOADS_DIR}/jpg/avatar`);
+    const imgDir = path.join(process.cwd(), `./${UPLOADS_DIR}/jpg/avatar`);
     try {
       await fs.access(imgDir);
     } catch {
-      // console.log("Pasa por aqui");
+      console.log("Pasa por aqui");
       await fs.mkdir(imgDir, { recursive: true });
     }
 
@@ -24,31 +24,11 @@ export const savePhotoService = async (photo, width) => {
 
     sharpImg.resize(width);
 
-    const imgName = uuid();
+    const imgName = `${uuid()}.jpg`;
 
     const imgPath = path.join(imgDir, imgName);
 
     await sharpImg.toFile(imgPath);
-
-    // Guardar el nombre del avatar generado en la base de datos
-    const user = await selectUserByEmail(req.user.id);
-
-    if (user.photo) await deletePhotoService(user.photo);
-
-    const updateUserAvatarModel = async (avatarName, userId) => {
-      const pool = await getPool();
-
-      await pool.query(
-        `
-            UPDATE users
-            SET photo = ?
-            WHERE id = ?
-        `,
-        [avatarName, userId]
-      );
-    };
-
-    await updateUserAvatarModel(imgName, req.user.id);
 
     return imgName;
   } catch (error) {
@@ -60,7 +40,7 @@ export const deletePhotoService = async (imgName) => {
   try {
     const imgPath = path.join(
       process.cwd(),
-      `./src/${UPLOADS_DIR}/jpg/avatar`,
+      `./${UPLOADS_DIR}/jpg/avatar`,
       imgName
     );
 

@@ -1,17 +1,11 @@
-import selectTaskByIdModel from "../../models/tasks/selectTaskByIdModel.js";
+import selectUserByEmail from "../../models/users/selectUserByEmail.js";
 import updateTaskStatus from "../../models/tasks/updateTaskStatus.js";
 
 const editStatusTaskController = async (req, res, next) => {
   try {
-    const { taskId } = req.params; // Get taskId from params
+    const user = selectUserByEmail(req.user.id);
     const { completed } = req.body;
-
-    const task = await selectTaskByIdModel(taskId);
-    if (!task) {
-      return res.status(404).send({ message: "Task not found" });
-    }
-
-    await updateTaskStatus(completed, taskId);
+    await updateTaskStatus(completed, req.user.id);
 
     res.send({
       status: "ok",

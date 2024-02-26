@@ -1,58 +1,48 @@
-// Errores de cliente (400-499)
+export const notFoundError = (resourse) => {
+  throw {
+    httpStatus: 404,
+    code: "RESOURECE_NOT_FOUND",
+    message: `Esta ruta no existe ${resourse}`,
+  };
+};
+
+export const userAlReadyRegistratedError = () => {
+  throw {
+    httpStatus: 409,
+    code: "USER_ALREADY_EXIST",
+    message: `Nombre de usuario ya en uso`,
+  };
+};
+
+export const emailAlReadyRegistratedError = () => {
+  throw {
+    httpStatus: 409,
+    code: "EMAIL_ALREDY_USED",
+    message: `Email ya en uso`,
+  };
+};
 
 export const invalidCredentialsError = () => {
   throw {
     httpStatus: 401,
     code: "ERROR_CREDENTIALS_INCORRECT",
-    message: `Incorrect credentials`,
+    message: `Credenciales incorrectas`,
   };
 };
 
-export const notAuthorizedError = () => {
+export const notAuthorizationError = () => {
   throw {
     httpStatus: 401,
-    code: "NOT_AUTHORIZED",
-    message: `User not authorized`,
+    code: "NOT_ACREDITED",
+    message: `Usuario no acreditado`,
   };
 };
 
-export const resolveOwnTaskError = () => {
+export const saveFileError = () => {
   throw {
-    httpStatus: 403,
-    code: "CANNOT_RESOLVE_TASK",
-    message: `You can't resolve your own task`,
-  };
-};
-
-export const notFoundError = (resource) => {
-  throw {
-    httpStatus: 404,
-    code: "RESOURECE_NOT_FOUND",
-    message: `The resource doesn't exist`,
-  };
-};
-
-export const solutionAlreadyExistsError = () => {
-  throw {
-    httpStatus: 409,
-    code: "SOLUTION_ALREADY_EXISTS",
-    message: `This task already has many solutions`,
-  };
-};
-
-export const userAlreadyRegistratedError = () => {
-  throw {
-    httpStatus: 409,
-    code: "USER_ALREADY_EXIST",
-    message: `Username already created`,
-  };
-};
-
-export const emailAlreadyRegistratedError = () => {
-  throw {
-    httpStatus: 409,
-    code: "EMAIL_ALREDY_USED",
-    message: `Email already used`,
+    httpStatus: 500,
+    code: "FILE_SAVE_FAILED",
+    message: `Error al guardar archivo`,
   };
 };
 
@@ -60,24 +50,22 @@ export const deleteFileError = () => {
   throw {
     httpStatus: 409,
     code: "FILE_DELETED_FAILED",
-    message: `Error deleting the file`,
+    message: `No se puede borrar la imagen`,
   };
 };
 
-// Errores de servidor (500-599)
-
-export const saveFileError = () => {
+export const canNotResolveTaskError = () => {
   throw {
-    httpStatus: 500,
-    code: "FILE_SAVE_FAILED",
-    message: `Error saving file`,
+    httpStatus: 403,
+    code: "CANNOT_RESOLVE_TASK",
+    message: `No puedes resolver tu propia tarea`,
   };
 };
 
-export const poolError = () => {
+export const solutionAlredyExistError = () => {
   throw {
-    httpStatus: 502,
-    code: "BAD_GATEWAY_CONNECTION",
-    message: `Server connection error`,
+    httpStatus: 409,
+    code: "SOLUTION_ALLREDY_TASK",
+    message: `La tarea ya tiene solución`,
   };
 };
