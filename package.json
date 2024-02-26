@@ -1,5 +1,17 @@
 {
+  "name": "cousera",
+  "version": "1.0.0",
+  "description": "portal necesidades",
+  "main": "app.js",
   "dependencies": {
     "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/app.js",
+    "client": "npm start --prefix ./client"
   }
 }

@@ -1,0 +1,101 @@
+/* Estilos generales */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  main {
+    padding: 2rem;
+  }
+  
+  h2 {
+    margin-bottom: 1rem;
+  }
+  
+  /* Detalles de la tarea */
+  .task-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .task-details p {
+    margin: 0;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .task-details .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .task-details .description {
+    white-space: pre-wrap;
+  }
+  
+  .task-details .user {
+    text-align: right;
+  }
+  
+  .task-details .completed {
+    background-color: #0077b7; /* Azul */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+  
+  .task-details .completed:hover {
+    background-color: darken(#0077b7, 10%);
+  }
+  
+  /* Media query para vista de ordenador */
+  @media (min-width: 768px) {
+    .task-details {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  
+    .task-details .description {
+      flex: 1;
+    }
+  
+    .task-details .user {
+      text-align: left;
+    }
+  }
+  
+  /* Estilos del formulario de subida de archivos */
+  .task-details label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .task-details input[type="file"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+  }
+  
+  .task-details button {
+    margin-top: 0.5rem;
+    background-color: #0077b7; /* Azul */
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+  
+  .task-details button:hover {
+    background-color: darken(#0077b7, 10%);
+  }
